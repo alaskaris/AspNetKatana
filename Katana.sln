@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Build", ".Build", "{D425FDFA-90FC-4276-8CBD-2850E8D78656}"
 	ProjectSection(SolutionItems) = preProject
@@ -139,6 +139,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalTests", "tests\FunctionalTests\FunctionalTests.csproj", "{4EF3F748-16D0-4112-AE43-AACADB3EF8E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Katana.Sandbox.Selfhost", "tests\Katana.Sandbox.Selfhost\Katana.Sandbox.Selfhost.csproj", "{9F2F31EF-6017-48CC-88D6-EC4FF4FEAAA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Plugins", "_Plugins", "{CB850E8A-6D7A-4754-8EBE-AA22C90698F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiTAX.Owin.Security.CustomHeaders", "FiTAX.Owin.Security.CustomHeaders\FiTAX.Owin.Security.CustomHeaders.csproj", "{391D417B-67CB-4DC2-A1B7-8E70DE77DFB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{1D4FAFBD-4946-4B8B-90CD-9ADDF39664CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -314,6 +320,14 @@ Global
 		{9F2F31EF-6017-48CC-88D6-EC4FF4FEAAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F2F31EF-6017-48CC-88D6-EC4FF4FEAAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F2F31EF-6017-48CC-88D6-EC4FF4FEAAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{391D417B-67CB-4DC2-A1B7-8E70DE77DFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{391D417B-67CB-4DC2-A1B7-8E70DE77DFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391D417B-67CB-4DC2-A1B7-8E70DE77DFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{391D417B-67CB-4DC2-A1B7-8E70DE77DFB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D4FAFBD-4946-4B8B-90CD-9ADDF39664CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4FAFBD-4946-4B8B-90CD-9ADDF39664CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D4FAFBD-4946-4B8B-90CD-9ADDF39664CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D4FAFBD-4946-4B8B-90CD-9ADDF39664CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -364,5 +378,9 @@ Global
 		{AA80B4A3-C885-4A7E-AF1A-FC3E89611988} = {10A4935F-4C17-44ED-BB00-D044FC7C77B8}
 		{4EF3F748-16D0-4112-AE43-AACADB3EF8E9} = {DD2E82F1-F3EA-4D1F-B623-9C34440D79D6}
 		{9F2F31EF-6017-48CC-88D6-EC4FF4FEAAA5} = {D067FB54-B69D-4502-8E2F-676271AC4B86}
+		{391D417B-67CB-4DC2-A1B7-8E70DE77DFB9} = {CB850E8A-6D7A-4754-8EBE-AA22C90698F5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16327CD4-30A2-4A49-8014-D90D940CA08E}
 	EndGlobalSection
 EndGlobal

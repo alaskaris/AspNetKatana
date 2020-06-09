@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Try accessing something authorized like Contact</h2>
+@Html.ActionLink("SignIn", "Contact", "Home", null, new { @class = "btn btn-success" })
+
