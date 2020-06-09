@@ -37,5 +37,12 @@ namespace WebApp.Controllers
             ViewBag.Message = "Claims in Identity.";
             return View();
         }
+
+        public ActionResult Error(string message)
+        {
+            ViewBag.Message = message;
+
+            return View("Error");
+        }
     }
 }
