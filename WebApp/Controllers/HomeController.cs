@@ -21,7 +21,6 @@ namespace WebApp.Controllers
             return View();
         }
 
-        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -29,6 +28,13 @@ namespace WebApp.Controllers
             ViewBag.Username = User.Identity.GetUserName();
             ViewBag.UserId = User.Identity.GetUserId();
 
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Claims()
+        {
+            ViewBag.Message = "Claims in Identity.";
             return View();
         }
     }
