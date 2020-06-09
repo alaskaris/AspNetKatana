@@ -48,6 +48,8 @@ namespace WebApp
                 CookieHttpOnly = true,
                 ExpireTimeSpan = TimeSpan.FromMinutes(cookieTimeoutDuration),
                 SlidingExpiration = cookieSlidingExpiration,
+                LoginPath = new PathString("/Account/SignUpSignIn"),
+                LogoutPath = new PathString("/Account/SignOut"),
                 Provider = new CookieAuthenticationProvider
                 {
                     OnResponseSignIn = context =>
@@ -143,6 +145,7 @@ namespace WebApp
             Microsoft.Owin.Security.ICertificateValidator certificateValidator = new IgnoringCertificateValidator();
             WsFederationAuthenticationOptions wsFederationAuthenticationOptions = new WsFederationAuthenticationOptions()
             {
+                AuthenticationMode = AuthenticationMode.Passive,
                 ConfigurationManager = configurationManager,
                 MetadataAddress = STSMetadata,
                 Wtrealm = STSRealm,
@@ -155,7 +158,7 @@ namespace WebApp
 
             #endregion
 
-            //app.UseWsFederationAuthentication(wsFederationAuthenticationOptions);
+            app.UseWsFederationAuthentication(wsFederationAuthenticationOptions);
 
             #region Custom Headers
 
@@ -172,7 +175,7 @@ namespace WebApp
 
             #endregion
 
-            //app.UseCustomHeadersAuthentication(customHeadersAuthenticationOptions);
+            app.UseCustomHeadersAuthentication(customHeadersAuthenticationOptions);
 
             #region SAML
 
@@ -184,6 +187,7 @@ namespace WebApp
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             var openIdConnectAuthenticationOptions = new OpenIdConnectAuthenticationOptions()
             {
+                AuthenticationMode = AuthenticationMode.Passive,
                 // Generate the metadata address using the tenant and policy information
                 MetadataAddress = String.Format(AuthUtils.ADB2C.Globals.WellKnownMetadata, AuthUtils.ADB2C.Globals.Tenant, AuthUtils.ADB2C.Globals.DefaultPolicy),
 
@@ -198,6 +202,7 @@ namespace WebApp
                     RedirectToIdentityProvider = OnRedirectToIdentityProvider,
                     AuthorizationCodeReceived = OnAuthorizationCodeReceived,
                     AuthenticationFailed = OnAuthenticationFailed,
+                    SecurityTokenValidated = OnSecurityTokenValidated
                 },
 
                 // Specify the claim type that specifies the Name property.
@@ -208,7 +213,9 @@ namespace WebApp
                 },
 
                 // Specify the scope by appending all of the scopes requested into one string (separated by a blank space)
-                Scope = $"openid profile offline_access {AuthUtils.ADB2C.Globals.ReadTasksScope} {AuthUtils.ADB2C.Globals.WriteTasksScope}"
+                Scope = $"openid profile offline_access {AuthUtils.ADB2C.Globals.ReadTasksScope} {AuthUtils.ADB2C.Globals.WriteTasksScope}",
+
+                
             };
 
             #endregion
@@ -278,7 +285,7 @@ namespace WebApp
 				 This object contains the property `AuthenticationTicket.Identity`, which is a `ClaimsIdentity`, created from the token received from
 				 Azure AD and has a full set of claims.
 				 */
-                IConfidentialClientApplication confidentialClient = AuthUtils.ADB2C.ClaimsPrincipalExtension.MsalAppBuilder.BuildConfidentialClientApplication(new ClaimsPrincipal(notification.AuthenticationTicket.Identity));
+                IConfidentialClientApplication confidentialClient = AuthUtils.ADB2C.MsalAppBuilder.BuildConfidentialClientApplication(new ClaimsPrincipal(notification.AuthenticationTicket.Identity));
 
                 // Upon successful sign in, get & cache a token using MSAL
                 AuthenticationResult result = await confidentialClient.AcquireTokenByAuthorizationCode(AuthUtils.ADB2C.Globals.Scopes, notification.Code).ExecuteAsync();
@@ -291,6 +298,15 @@ namespace WebApp
                     ReasonPhrase = $"Unable to get authorization code {ex.Message}."
                 });
             }
+        }
+
+        private Task OnSecurityTokenValidated(SecurityTokenValidatedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
+        {
+            ClaimsIdentity claims = notification.AuthenticationTicket.Identity;
+            string username = claims.FindFirst("extension_Username").Value;
+            claims.AddClaim(new Claim(ClaimTypes.Name, username, null, notification.Options.AuthenticationType));
+            return Task.FromResult(0);
+            //TODO: add a Graph API call to get username!!!
         }
 
         #endregion
